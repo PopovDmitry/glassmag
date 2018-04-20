@@ -97,31 +97,32 @@ class App_Email
         /*
          * Record layout “HEADER“
          */
-        // Field name                   Contents, Description                Format   Length
-        // rec_mode                     Record mode 01… Header               numeric  2    Z
-        // rec_type                     Record type 0.. new                  numeric  2    Z
+        // Field name                   Contents, Description               Format   Length
+        // rec_mode                     Record mode 01… Header              numeric  2    Z
+        // rec_type                     Record type 0.. new                 numeric  2    Z
         //                              1.. modify 2.. delete
         //                              3.. new with order number
         //                              4.. confirm order
         $headerString = " 1  0";
-        // order_no                     Order Number                         numeric  9    Z
-        $headerString .= " " . self::setStringLength(9, $this->name);
-        // oder_type                    Order Type                           numeric  2    Z
+        // order_no                     Order Number                        numeric  9    Z
+        $orderNo = " " . self::setStringLength(9, $this->name);
+        $headerString .= $orderNo;
+        // oder_type                    Order Type                          numeric  2    Z
         $headerString .= "  0";
-            // hdr.flds.cust_ord_no         Customer Order Number                alpha    60   B
+            // hdr.flds.cust_ord_no         Customer Order Number           alpha    60   B
         $headerString .= " " . self::setStringLength(60, "Importer, " . date('d.m.Y,i:G:s'));
-        // hdr.flds.cust_ord_date       Customer Order Date                  date     8    B
+        // hdr.flds.cust_ord_date       Customer Order Date                 date     8    B
         $headerString .= " " . date('d.m.y');
-        // hdr.flds.deliv_estimated     Estimated Delivery Date              alpha    15   B
+        // hdr.flds.deliv_estimated     Estimated Delivery Date             alpha    15   B
         $headerString .= "                ";
-        // hdr.flds.deliv_date          Delivery Date                        date     8    B
+        // hdr.flds.deliv_date          Delivery Date                       date     8    B
         $headerString .= " " . date('d.m.y', strtotime($orderDate));
-        // hdr.flds.cust_no             Customer number                      numeric  6    Z
-        // pseudo_no                    Pro Forma Customer number            numeric  6    Z
-        // hdr.deliv.addr_no            Delivery Address ID                  numeric  3    B
+        // hdr.flds.cust_no             Customer number                     numeric  6    Z
+        // pseudo_no                    Pro Forma Customer number           numeric  6    Z
+        // hdr.deliv.addr_no            Delivery Address ID                 numeric  3    B
         $headerString .= "    999      0   1";
-        // hdr.flds.infl_suppl_pct      Inflation supplement                 numeric  5.2  B
-        // hdr.flds.price_system_no     Price System                         numeric  4    B
+        // hdr.flds.infl_suppl_pct      Inflation supplement                numeric  5.2  B
+        // hdr.flds.price_system_no     Price System                        numeric  4    B
         // hdr.flds.auto_discount       Auto Discount                       numeric  1    B
         // hdr.flds.sales_rep_no        Sales Representative                numeric  5    B
         $headerString .= "                    ";
@@ -137,6 +138,7 @@ class App_Email
         $headerString .= "                                 ";
         // hdr.flds.site_code           Site Code                           alpha    15   B
         // hdr.flds.currency_code       Currency Code                       alpha    4    B
+        // todo программа жалуется на ?Currency Code? Эта валюта отсуствует
         $headerString .= "                     ";
         // hdr.flds.currency_rate       Currency Rate                       numeric  9.4  B
         // tot.flds.reduction_vat_code  VAT code discount                   alpha    4    B
@@ -146,6 +148,7 @@ class App_Email
         // reason                       Reason Codes                        alpha    10   B
         $headerString .= "          0";
         // hdr.deliv.type               Delivery type                       numeric  2    B
+        // todo программа жалуется на ?Delivery type? Этот вид доставки отсуствует(0)
         // hdr.flds.wind_pressure       Wind Pressure                       numeric  4    B
         // hdr.flds.express_yn          Express delivery                    numeric  1    B
         // hdr.flds.deliv_stock         Delivery Stock                      alpha    15   B
@@ -210,8 +213,9 @@ class App_Email
             // Field name                      Contents, Description              Format  Length
             // rec_mode                        Record Mode 4… Item                numeric  2    Z
             // rec_type                        Record Type                        numeric  2    Z
+            $itemString = " 4  0";
             // order_no                        Order Number                       numeric  9    Z
-            $itemString = " 4  0         0";
+            $itemString .= $orderNo;//"         0";
             // order_pos                       Order Item Number                  numeric  3    Z
             $itemString .= " " . self::setStringLength(3, strval($key + 1));
             // variant                         Variant                            numeric  2    Z
