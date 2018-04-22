@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
     <title>Тандем-заказ стеклопакетов</title>
     <link rel="icon" type="image/vnd.microsoft.icon" href="/template/img/favicon.ico">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap -->
     <link href="/template/css/bootstrap.min.css" rel="stylesheet">
