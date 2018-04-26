@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Тандем-заказ стеклопакетов</title>
-    <link rel="icon" type="image/vnd.microsoft.icon" href="/template/img/favicon.ico">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/m/template/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap -->
-    <link href="/template/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/m/template/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,6 +22,6 @@
             include ($view);
 	    ?>
 	</div>
-    <script src="/template/js/bootstrap.min.js"></script>
+    <script src="/m/template/js/bootstrap.min.js"></script>
 </body>
 </html>
