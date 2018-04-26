@@ -4,10 +4,10 @@
     <div class="form-group pb-5">
         <div class="form-check-inline <?php echo $errors['delivery']; ?>">
             <legend class="col-form-label pr-3 pt-3 pb-3">Вид&nbsp;доставки</legend>
-            <label for="delivery0" class="form-check-label form-check-inline pr-2 pt-3 pb-3">
-                <input type="radio" name="delivery" id="delivery0" class="form-check-input" value="0" <?php echo $values['delivery0']; ?>>&nbsp;Компанией</label>
-            <label for="delivery1" class="form-check-label form-check-inline pt-3 pb-3">
-                <input type="radio" name="delivery" id="delivery1" class="form-check-input" value="1" <?php echo $values['delivery1']; ?>>&nbsp;Самовывоз</label>
+            <label for="delivery1" class="form-check-label form-check-inline pr-2 pt-3 pb-3">
+                <input type="radio" name="delivery" id="delivery1" class="form-check-input" value="1" <?php echo $values['delivery1']; ?>>&nbsp;Компанией</label>
+            <label for="delivery2" class="form-check-label form-check-inline pt-3 pb-3">
+                <input type="radio" name="delivery" id="delivery2" class="form-check-input" value="2" <?php echo $values['delivery2']; ?>>&nbsp;Самовывоз</label>
         </div>
         <div>
         <label for="order-date" class="col-form-label">Дата выполнения заказа</label>

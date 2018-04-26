@@ -61,7 +61,7 @@ class App_Email
         return mail($mailTo, $subject, $message, $header, $envelope);
     }*/
 
-    public function setFileContent($orderPhone, $orderDate)
+    public function setFileContent($orderDate, $orderDelivery)
     {
         /*
          * File format:  - ASCII-text file with fixed record size
@@ -105,12 +105,11 @@ class App_Email
         //                              4.. confirm order
         $headerString = " 1  0";
         // order_no                     Order Number                        numeric  9    Z
-        $orderNo = " " . self::setStringLength(9, $this->name);
-        $headerString .= $orderNo;
+        $headerString .= "         0";
         // oder_type                    Order Type                          numeric  2    Z
         $headerString .= "  0";
             // hdr.flds.cust_ord_no         Customer Order Number           alpha    60   B
-        $headerString .= " " . self::setStringLength(60, "Importer, " . date('d.m.Y,i:G:s'));
+        $headerString .= " " . self::setStringLength(60, "Importer, " . date('d.m.Y,H:i:s'));
         // hdr.flds.cust_ord_date       Customer Order Date                 date     8    B
         $headerString .= " " . date('d.m.y');
         // hdr.flds.deliv_estimated     Estimated Delivery Date             alpha    15   B
@@ -120,7 +119,8 @@ class App_Email
         // hdr.flds.cust_no             Customer number                     numeric  6    Z
         // pseudo_no                    Pro Forma Customer number           numeric  6    Z
         // hdr.deliv.addr_no            Delivery Address ID                 numeric  3    B
-        $headerString .= "    999      0   1";
+        $headerString .= "    999      0";
+        $headerString .= "   " . $orderDelivery;
         // hdr.flds.infl_suppl_pct      Inflation supplement                numeric  5.2  B
         // hdr.flds.price_system_no     Price System                        numeric  4    B
         // hdr.flds.auto_discount       Auto Discount                       numeric  1    B
@@ -138,7 +138,6 @@ class App_Email
         $headerString .= "                                 ";
         // hdr.flds.site_code           Site Code                           alpha    15   B
         // hdr.flds.currency_code       Currency Code                       alpha    4    B
-        // todo программа жалуется на ?Currency Code? Эта валюта отсуствует
         $headerString .= "                     ";
         // hdr.flds.currency_rate       Currency Rate                       numeric  9.4  B
         // tot.flds.reduction_vat_code  VAT code discount                   alpha    4    B
@@ -148,13 +147,12 @@ class App_Email
         // reason                       Reason Codes                        alpha    10   B
         $headerString .= "          0";
         // hdr.deliv.type               Delivery type                       numeric  2    B
-        // todo программа жалуется на ?Delivery type? Этот вид доставки отсуствует(0)
         // hdr.flds.wind_pressure       Wind Pressure                       numeric  4    B
         // hdr.flds.express_yn          Express delivery                    numeric  1    B
         // hdr.flds.deliv_stock         Delivery Stock                      alpha    15   B
         $headerString .= "                          ";
         // hdr.deliv.addr.name          Delivery Address – Name             alpha    40   B
-        $headerString .= " " . self::setStringLength(40, $this->nameOrder);
+        $headerString .= "                                         ";// . self::setStringLength(40, $this->nameOrder);
         // hdr.deliv.addr.opening       Delivery Address – Opening          alpha    40   B
         $headerString .= "                                         ";
         // hdr.deliv.addr.line1         Delivery Address – Line1            alpha    60   B
@@ -174,7 +172,7 @@ class App_Email
         // hdr.deliv.addr.post_code     Postal Code                         alpha    10   B
         $headerString .= "           ";
         // hdr.deliv.addr.phone_no      Phone number                        alpha    20   B
-        $headerString .= " " . self::setStringLength(20, $orderPhone);
+        $headerString .= "                     ";// . self::setStringLength(20, $orderPhone);
         // hdr.deliv.addr.fax_no        Fax number                          alpha    20   B
         $headerString .= "                     ";
         // hdr.deliv.addr.email         Email                               alpha    60   B
@@ -215,7 +213,7 @@ class App_Email
             // rec_type                        Record Type                        numeric  2    Z
             $itemString = " 4  0";
             // order_no                        Order Number                       numeric  9    Z
-            $itemString .= $orderNo;//"         0";
+            $itemString .= "         0";
             // order_pos                       Order Item Number                  numeric  3    Z
             $itemString .= " " . self::setStringLength(3, strval($key + 1));
             // variant                         Variant                            numeric  2    Z
@@ -233,7 +231,7 @@ class App_Email
             // item.flds.height                Height                             numeric  7.3   Z
             $itemString .= " " . self::setStringLength(8, $product[2] . ".000"); // . " " . " 806.000";
             // item.flds.func_code             Functional IGU Code                numeric  5     Z
-            $itemString .= "     1";
+            $itemString .= "     6";//"     1";
             // item.flds.item_text             Item Text                          alpha    50    B
             $itemString .= " " . self::setStringLength(50, $product[1]);
             // item.flds.glass1_code           Glass code 1                       numeric  9     Z
@@ -455,10 +453,10 @@ class App_Email
 
         $subject = '=?utf-8?B?' . base64_encode("Заказ №" . $this->name) . '?=';
 
-        $headers    = "MIME-Version: 1.0;" . $EOL . "";
-        $headers   .= "Content-Type: multipart/mixed; boundary=\"" . $boundary . "\"" . $EOL . "";
-        $headers   .= "From: ". $this->nameFrom ." <".$this->mailFrom . ">\nReply-To: " . $this->replyTo . "\n";
-
+        $headers = "MIME-Version: 1.0;" . $EOL . "";
+        $headers .= "Content-Type: multipart/mixed; boundary=\"" . $boundary . "\"" . $EOL . "";
+        $headers .= "From: " . $this->nameFrom ." <".$this->mailFrom . ">\nReply-To: " . $this->replyTo . $EOL . "";//"\n";
+        $headers .= 'Date: ' . date('r') . $EOL . "";
         $multipart  = "--" . $boundary . $EOL;
         $multipart .= "Content-Type: text/html; charset=utf-8" . $EOL . "";
         $multipart .= "Content-Transfer-Encoding: base64" . $EOL . "";

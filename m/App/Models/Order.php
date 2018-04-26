@@ -6,7 +6,7 @@ class App_Models_Order
 {
     use App_ClearData;
 
-    private $delivery = "0";
+    private $delivery = "1";
     private $orderDate;
     private $orderName = "";
     private $orderPhone = "";
@@ -48,7 +48,7 @@ class App_Models_Order
     public function checkOrder()
     {
         $result = true;
-        if($this->delivery != "0" && $this->delivery != "1")
+        if($this->delivery != "1" && $this->delivery != "2")
         {
             $this->errors['delivery'] = " is-invalid";
             $result = false;
@@ -88,8 +88,8 @@ class App_Models_Order
 
     public function getOrder()
     {
-        $values['delivery0'] = ($this->delivery == "0") ? "checked" : "";
         $values['delivery1'] = ($this->delivery == "1") ? "checked" : "";
+        $values['delivery2'] = ($this->delivery == "2") ? "checked" : "";
         $values['order-date'] = $this->orderDate;
         $values['order-name'] = $this->orderName;
         $values['order-phone'] = $this->orderPhone;
@@ -117,9 +117,10 @@ class App_Models_Order
      */
     public function sendOrder()
     {
+        date_default_timezone_set('Asia/Yekaterinburg');
         $email = new App_Email($this->orderName, $this->orderEmail);
         $email->setMessageHtml($this->delivery, $this->orderDate, $this->orderPhone);
-        $email->setFileContent($this->orderPhone, $this->orderDate);
+        $email->setFileContent($this->orderDate, $this->delivery);
         return $email->mailAttachmentHtml();
     }
 } 

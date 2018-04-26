@@ -37,7 +37,7 @@ class App_Cart
             }
         }
         $n = 0;
-        foreach ($_SESSION['cart'] as $key)
+        foreach ($_SESSION['cart'] as $key => $value)
         {
             if ($key != $n)
             {
