@@ -17,7 +17,7 @@ class App_Controllers_Order  extends App_BaseController
             {
                 if($model->sendOrder())
                 {
-                    App_Cart::delCart();
+                    //App_Cart::delCart();
                     header("Location: /m/orderok");
                     exit;
                 }
