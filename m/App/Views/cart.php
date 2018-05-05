@@ -21,7 +21,7 @@
                 <a href="/m/index" class="btn btn-primary btn-block btn-lg border-dark">Добавить</a>
             </div>
             <div class="btn-group col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 px-0">
-                <a href="/m/cart" class="btn btn-primary btn-block disabled btn-lg border-dark">Корзина <?php echo $cartCount; ?></a>
+                <a href="/m/cart" class="btn btn-primary btn-block disabled btn-lg border-dark">Корзина (<?php echo $cartCount; ?>)</a>
             </div>
             <div class="btn-group col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 px-1">
                 <a href="/m/order" class="btn btn-primary btn-block btn-lg border-dark">Оправить</a>
